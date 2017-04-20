@@ -95,7 +95,7 @@ class Popup_On_Yt_Video_End_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+		wp_register_script('yt-frame-api', "https://www.youtube.com/iframe_api");
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/popup-on-yt-video-end-public.js', array( 'jquery' ), $this->version, false );
 
 	}
@@ -114,7 +114,8 @@ class Popup_On_Yt_Video_End_Public {
 				"youtube-id" => "",
 				"css" => "",
 			);
-			//fix error
+			//fix error on wordpress 4.2.13 
+			
 			//$atts = array("iframe-id='hello'", "youtube-id='2BB1j_sxJMk'" );
 			if(!array_key_exists('iframe-id', $atts) && strpos($atts[0], "iframe-id") !== false ){
 				$normalized = array();
@@ -124,11 +125,13 @@ class Popup_On_Yt_Video_End_Public {
 				}
 				$atts = $normalized;
 			}
+
 			//end fix
 			$atts = array_change_key_case((array)$atts, CASE_LOWER);
 			$values = shortcode_atts($default, $atts, $tag);
 			$id = $values["iframe-id"];
 			$href = "#TB_inline?height=300&width=400&inlineId=popup-{$id}";
+
 			ob_start();
 			?>
 					<?php if(isset($values["css"])&& !empty($values["css"])) : ?>
@@ -144,14 +147,15 @@ class Popup_On_Yt_Video_End_Public {
 	                <a id="<?php echo 'activator-'.esc_attr( $id );?>" href="<?php echo $href; ?>" class="thickbox" style="display:none">Display content</a>
 	                <div  id="<?php echo 'popup-'.$id; ?>" style="display:none">
 						<?php echo apply_filters('the_content', $content); ?>
-					</div>
-			<script>
-	                    
-				var tag = document.createElement('script');
+					</div>    
 
-				tag.src = "https://www.youtube.com/iframe_api";
-				var firstScriptTag = document.getElementsByTagName('script')[0];
-				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+			<?php
+
+			/* prepare embeded script for youtube api */
+
+			$html = ob_get_clean();
+			ob_start();
+			?>
 				var player;
 				function onYouTubeIframeAPIReady() {
 				    // first video
@@ -173,10 +177,15 @@ class Popup_On_Yt_Video_End_Public {
 				    }
 				}
 
-			</script>
 			<?php
-			$html = ob_get_clean();
+			$frameScript = ob_get_clean();
+
+			wp_enqueue_script("yt-frame-api");
+
+			wp_add_inline_script( "yt-frame-api", $frameScript, 'after' );
+
 			return $html;
+			
 		}catch(Exception $e){
 			//error_log($e);
 			var_dump($e->getMessage());
