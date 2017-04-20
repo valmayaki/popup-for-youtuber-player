@@ -110,10 +110,14 @@ class Popup_On_Yt_Video_End_Public {
 	{
 		try{
 			$default = array(
-				"iframe-id" => "",
+				"iframe-id" => "yt-".uniqid(),
+				"selector" => "",
 				"youtube-id" => "",
 				"css" => "",
+				"modal_width" => "400",
+				"modal_height" => "300",
 			);
+
 			//fix error on wordpress 4.2.13 
 			
 			//$atts = array("iframe-id='hello'", "youtube-id='2BB1j_sxJMk'" );
@@ -130,7 +134,7 @@ class Popup_On_Yt_Video_End_Public {
 			$atts = array_change_key_case((array)$atts, CASE_LOWER);
 			$values = shortcode_atts($default, $atts, $tag);
 			$id = $values["iframe-id"];
-			$href = "#TB_inline?height=300&width=400&inlineId=popup-{$id}";
+			$href = sprintf("#TB_inline?height=%s&width=%s&inlineId=popup-{$id}", $values['modal_height'], $values['modal_width']);
 
 			ob_start();
 			?>
@@ -144,7 +148,6 @@ class Popup_On_Yt_Video_End_Public {
 	                    	<div id="<?php echo esc_attr( $id );?>"></div>
 	                	</div>
 	                <?php endif; ?>
-	                <a id="<?php echo 'activator-'.esc_attr( $id );?>" href="<?php echo $href; ?>" class="thickbox" style="display:none">Display content</a>
 	                <div  id="<?php echo 'popup-'.$id; ?>" style="display:none">
 						<?php echo apply_filters('the_content', $content); ?>
 					</div>    
@@ -158,8 +161,9 @@ class Popup_On_Yt_Video_End_Public {
 
 
 			$popyt = array(
-				"selector" => "#{$id}",
+				"selector" => isset($values["selector"]) && !empty($values["selector"]) ? $values["selector"] : "#{$id}" ,
 				"activator" => "#activator-{$id}",
+				"url" => $href,
 			);
 
 			if (isset($values["youtube-id"]) && !empty($values["youtube-id"])) :

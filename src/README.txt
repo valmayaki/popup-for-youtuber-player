@@ -112,3 +112,12 @@ Markdown uses email style notation for blockquotes and I've been told:
 > Asterisks for *emphasis*. Double it up  for **strong**.
 
 `<?php code(); // goes in backticks ?>`
+
+available options
+$default = array(
+				"iframe-id" => "",
+				"youtube-id" => "",
+				"css" => "",
+				"modal_width" => "400",
+				"modal_heigth" => "300",
+			);
