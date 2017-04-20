@@ -69,7 +69,7 @@ class Popup_On_Yt_Video_End {
 	public function __construct() {
 
 		$this->plugin_name = 'popup-on-yt-video-end';
-		$this->version = '1.0.4';
+		$this->version = '1.0.5';
 
 		$this->load_dependencies();
 		$this->set_locale();

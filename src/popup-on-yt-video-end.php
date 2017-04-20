@@ -16,7 +16,7 @@
  * Plugin Name:       PopUp on Youtube Video End
  * Plugin URI:        www.opushive.com
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            Opus Hive
  * Author URI:        www.opushive.com
  * License:           GPL-2.0+

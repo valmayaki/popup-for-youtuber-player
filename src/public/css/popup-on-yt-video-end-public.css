@@ -2,3 +2,13 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+#TB_window{
+	opacity: 1;
+    animation: fade 2s linear;
+}
+
+
+@keyframes fade {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
