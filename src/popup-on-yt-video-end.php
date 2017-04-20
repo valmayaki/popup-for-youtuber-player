@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.opushive.com
- * @since             1.0.3
+ * @since             1.0.0
  * @package           Popup_On_Yt_Video_End
  *
  * @wordpress-plugin
  * Plugin Name:       PopUp on Youtube Video End
  * Plugin URI:        www.opushive.com
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Version:           1.0.4
  * Author:            Opus Hive
  * Author URI:        www.opushive.com
  * License:           GPL-2.0+

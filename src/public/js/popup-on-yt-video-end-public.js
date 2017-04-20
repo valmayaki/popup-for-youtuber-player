@@ -59,7 +59,8 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
-    	jQuery(PopupYT.activator).click();
+    	var activator = jQuery(PopupYT.activator);
+    	tb_show("", activator.attr('href'));
         console.log('player stopped');
     }
 }
