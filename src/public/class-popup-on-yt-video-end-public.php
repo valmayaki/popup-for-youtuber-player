@@ -151,44 +151,30 @@ class Popup_On_Yt_Video_End_Public {
 
 			<?php
 
+			$html = ob_get_clean();
+
 			/* prepare embeded script for youtube api */
 
-			$html = ob_get_clean();
-			ob_start();
-			?>
-				var player;
-				function onYouTubeIframeAPIReady() {
-				    // first video
-				    player = new YT.Player('<?php echo $id;  ?>', {
-				    	<?php if (isset($values["youtube-id"]) && !empty($values["youtube-id"])) : ?>
-				    		<?php echo "videoId: '{$values['youtube-id']}', ";?>
-				    	<?php endif; ?>
-				        events: {
-				            'onReady': function(){ console.log("Ready!"); },
-				            'onStateChange': onPlayerStateChange
-				        }
-				    });
-				}
 
-				function onPlayerStateChange(event) {
-				    if (event.data == YT.PlayerState.ENDED) {
-				    	jQuery("#activator-<?php echo esc_attr( $id ); ?>").click();
-				        console.log('player stopped');
-				    }
-				}
 
-			<?php
-			$frameScript = ob_get_clean();
+			$popyt = array("selector" => $id);
+
+			if (isset($values["youtube-id"]) && !empty($values["youtube-id"])) :
+
+				$popyt['videoId'] = $values["youtube-id"];
+
+			endif;
+
+			wp_localize_script("yt-frame-api" , "PopupYT", $popyt);
 
 			wp_enqueue_script("yt-frame-api");
 
-			wp_add_inline_script( "yt-frame-api", $frameScript, 'after' );
 
 			return $html;
 			
-		}catch(Exception $e){
+		}catch(Exception $e) {
 			//error_log($e);
-			var_dump($e->getMessage());
+			echo ($e->getMessage());
 		}
 	}
 

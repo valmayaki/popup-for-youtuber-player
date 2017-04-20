@@ -37,3 +37,29 @@
 //	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	
 })( jQuery );
+
+var player;
+function onYouTubeIframeAPIReady() {
+    // first video
+    
+    var PlayerOptions = {
+    	
+        events: {
+            'onReady': function(){ console.log("Ready!"); },
+            'onStateChange': onPlayerStateChange
+        }
+    };
+
+    if("undefined" !== typeof PopupYT.videoId ){
+    	PlayerOptions.videoId = PopupYT.videoId;
+    }
+
+    player = new YT.Player(jQuery(PopupYT.selector)[0], PlayerOptions);
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+    	jQuery("#activator-"+PopupYT.selector).click();
+        console.log('player stopped');
+    }
+}
