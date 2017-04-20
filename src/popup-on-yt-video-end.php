@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              www.opushive.com
- * @since             1.0.0
+ * @since             1.0.3
  * @package           Popup_On_Yt_Video_End
  *
  * @wordpress-plugin

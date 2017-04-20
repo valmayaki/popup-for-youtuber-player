@@ -96,7 +96,7 @@ class Popup_On_Yt_Video_End_Public {
 		 * class.
 		 */
 		wp_register_script('yt-frame-api', "https://www.youtube.com/iframe_api");
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/popup-on-yt-video-end-public.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/popup-on-yt-video-end-public.js', array( 'jquery', 'yt-frame-api'), $this->version, false );
 
 	}
 	public function init()
@@ -157,7 +157,10 @@ class Popup_On_Yt_Video_End_Public {
 
 
 
-			$popyt = array("selector" => $id);
+			$popyt = array(
+				"selector" => "#{$id}",
+				"activator" => "#activator-{$id}",
+			);
 
 			if (isset($values["youtube-id"]) && !empty($values["youtube-id"])) :
 
@@ -168,6 +171,7 @@ class Popup_On_Yt_Video_End_Public {
 			wp_localize_script("yt-frame-api" , "PopupYT", $popyt);
 
 			wp_enqueue_script("yt-frame-api");
+			wp_enqueue_script($this->plugin_name);
 
 
 			return $html;
