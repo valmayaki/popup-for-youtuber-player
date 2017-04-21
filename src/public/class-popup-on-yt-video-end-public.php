@@ -116,12 +116,15 @@ class Popup_On_Yt_Video_End_Public {
 				"css" => "",
 				"modal_width" => "400",
 				"modal_height" => "300",
+				"title" => "",
 			);
 
 			//fix error on wordpress 4.2.13 
 			
 			//$atts = array("iframe-id='hello'", "youtube-id='2BB1j_sxJMk'" );
-			if(!array_key_exists('iframe-id', $atts) && strpos($atts[0], "iframe-id") !== false ){
+			$keys = array_keys($atts);
+
+			if(!array_key_exists('iframe-id', $atts) && is_int($keys[0]) ){
 				$normalized = array();
 				foreach ($atts as $value) {
 					$key_value = explode("=", $value);
@@ -164,6 +167,7 @@ class Popup_On_Yt_Video_End_Public {
 				"selector" => isset($values["selector"]) && !empty($values["selector"]) ? $values["selector"] : "#{$id}" ,
 				"activator" => "#activator-{$id}",
 				"url" => $href,
+				"title" => $values["title"],
 			);
 
 			if (isset($values["youtube-id"]) && !empty($values["youtube-id"])) :

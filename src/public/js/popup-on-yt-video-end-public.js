@@ -41,7 +41,15 @@
 var player;
 function onYouTubeIframeAPIReady() {
     // first video
-    
+    var YVideo = document.querySelector(PopupYT.selector);
+    if (YVideo){
+    	var a = document.createElement("a");
+    	a.href = YVideo.src;
+    	if (a.search.indexOf("enablejsapi=1") == -1){
+    		a.search += "&enablejsapi=1";
+    		YVideo.src = a.href;
+    	}
+    }
     var PlayerOptions = {
     	
         events: {
@@ -54,13 +62,13 @@ function onYouTubeIframeAPIReady() {
     	PlayerOptions.videoId = PopupYT.videoId;
     }
 
-    player = new YT.Player(jQuery(PopupYT.selector)[0], PlayerOptions);
+    player = new YT.Player(YVideo, PlayerOptions);
 }
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
     	//var activator = jQuery(PopupYT.activator);
-    	tb_show("", PopupYT.url);
+    	tb_show(PopupYT.title, PopupYT.url);
         console.log('player stopped');
     }
 }
